@@ -11,6 +11,7 @@ func main() {
 	txt := (exporter.TextFile)
 	son := (exporter.JSONFile)
 	exp := (exporter.XMLFile)
+	yal := (exporter.YAMLFile)
 
 	fb := new(facebook.Facebook)
 	twtr := new(twitter.Twitter)
@@ -37,6 +38,14 @@ func main() {
 	v = exp(lnkdn, "linkdn.xml")
 
 	if v != nil {
+		panic(err)
+	}
+
+	b := yal(twtr, "twtrdata.yaml")
+	b = yal(fb, "fbdata.yaml")
+	b = yal(lnkdn, "linkdn.yaml")
+
+	if b != nil {
 		panic(err)
 	}
 
