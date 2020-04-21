@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"os"
+
+	"gopkg.in/yaml.v3"
 )
 
 // SocialMedia is  an interface of feeds
@@ -71,6 +73,31 @@ func XMLFile(u SocialMedia, filename string) error {
 		}
 
 		bytesWritten, err := x.Write(f)
+
+		if err != nil {
+			return errors.New("an error occured writing to file: " + err.Error())
+		}
+		fmt.Printf("wrote %d bytes\n", bytesWritten)
+	}
+	return nil
+}
+
+// YAMLFile converts SocialMedia feeds to YAML file
+func YAMLFile(u SocialMedia, filename string) error {
+	q, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0755)
+	defer q.Close()
+
+	if err != nil {
+		return errors.New("an error occured opening the file: " + err.Error())
+	}
+
+	for _, ld := range u.Feed() {
+		f, err := yaml.Marshal(ld)
+		if err != nil {
+			return errors.New("an error occured writing to file: " + err.Error())
+		}
+
+		bytesWritten, err := q.Write(f)
 
 		if err != nil {
 			return errors.New("an error occured writing to file: " + err.Error())
