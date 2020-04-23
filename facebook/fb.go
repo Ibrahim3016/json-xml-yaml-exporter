@@ -1,5 +1,6 @@
 package facebook
 
+// Facebook is a struct of facebook
 type Facebook struct {
 	URL     string
 	Name    string

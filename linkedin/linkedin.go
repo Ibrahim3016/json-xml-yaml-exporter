@@ -1,5 +1,6 @@
 package linkedin
 
+// Linkedin is a struct of linkedin
 type Linkedin struct {
 	URL         string
 	Name        string

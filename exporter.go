@@ -21,6 +21,7 @@ func TextFile(u SocialMedia, filename string) error {
 	if err != nil {
 		return errors.New("an error occured opening the file: " + err.Error())
 	}
+
 	for _, fd := range u.Feed() {
 		n, err := f.Write([]byte(fd + "\n"))
 		if err != nil {
@@ -40,19 +41,27 @@ func JSONFile(u SocialMedia, filename string) error {
 		return errors.New("an error occured opening the file: " + err.Error())
 	}
 
-	for _, dd := range u.Feed() {
-		b, err := json.MarshalIndent(dd, "\n", "\n")
-		if err != nil {
-			return errors.New("an error occured writing to file: " + err.Error())
-		}
-
-		bytesWritten, err := f.Write(b)
-
-		if err != nil {
-			return errors.New("an error occured writing to file: " + err.Error())
-		}
-		fmt.Printf("wrote %d bytes\n", bytesWritten)
+	i := 1
+	md := u.Feed()
+	cd := make(map[int][]string)
+	for _, value := range md {
+		cd[i] = append(cd[i], value)
+		i++
 	}
+
+	b, err := json.MarshalIndent(cd, "\n", "")
+
+	if err != nil {
+		return errors.New("an error occured writing to file: " + err.Error())
+	}
+
+	bytesWritten, err := f.Write(b)
+
+	if err != nil {
+		return errors.New("an error occured writing to file: " + err.Error())
+	}
+
+	fmt.Printf("wrote %d bytes\n", bytesWritten)
 
 	return nil
 }
@@ -66,19 +75,19 @@ func XMLFile(u SocialMedia, filename string) error {
 		return errors.New("an error occured opening the file: " + err.Error())
 	}
 
-	for _, ld := range u.Feed() {
-		f, err := xml.MarshalIndent(ld, "\n", "\n")
-		if err != nil {
-			return errors.New("an error occured writing to file: " + err.Error())
-		}
-
-		bytesWritten, err := x.Write(f)
-
-		if err != nil {
-			return errors.New("an error occured writing to file: " + err.Error())
-		}
-		fmt.Printf("wrote %d bytes\n", bytesWritten)
+	md := u.Feed()
+	b, err := xml.MarshalIndent(md, "\n", "\n")
+	if err != nil {
+		return errors.New("an error occured writing to file: " + err.Error())
 	}
+
+	bytesWritten, err := x.Write(b)
+
+	if err != nil {
+		return errors.New("an error occured writing to file: " + err.Error())
+	}
+	fmt.Printf("wrote %d bytes\n", bytesWritten)
+
 	return nil
 }
 
@@ -91,18 +100,18 @@ func YAMLFile(u SocialMedia, filename string) error {
 		return errors.New("an error occured opening the file: " + err.Error())
 	}
 
-	for _, ld := range u.Feed() {
-		f, err := yaml.Marshal(ld)
-		if err != nil {
-			return errors.New("an error occured writing to file: " + err.Error())
-		}
-
-		bytesWritten, err := q.Write(f)
-
-		if err != nil {
-			return errors.New("an error occured writing to file: " + err.Error())
-		}
-		fmt.Printf("wrote %d bytes\n", bytesWritten)
+	md := u.Feed()
+	b, err := yaml.Marshal(md)
+	if err != nil {
+		return errors.New("an error occured writing to file: " + err.Error())
 	}
+
+	bytesWritten, err := q.Write(b)
+
+	if err != nil {
+		return errors.New("an error occured writing to file: " + err.Error())
+	}
+	fmt.Printf("wrote %d bytes\n", bytesWritten)
+
 	return nil
 }

@@ -30,7 +30,7 @@ func main() {
 	m = son(lnkdn, "linkdn.json")
 
 	if m != nil {
-		panic(err)
+		panic(m)
 	}
 
 	v := exp(twtr, "twtrdata.xml")
@@ -38,7 +38,7 @@ func main() {
 	v = exp(lnkdn, "linkdn.xml")
 
 	if v != nil {
-		panic(err)
+		panic(v)
 	}
 
 	b := yal(twtr, "twtrdata.yaml")
@@ -46,7 +46,7 @@ func main() {
 	b = yal(lnkdn, "linkdn.yaml")
 
 	if b != nil {
-		panic(err)
+		panic(b)
 	}
 
 }

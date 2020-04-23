@@ -1,5 +1,6 @@
 package twitter
 
+// Twitter is a struct of twitter
 type Twitter struct {
 	URL       string
 	Username  string
